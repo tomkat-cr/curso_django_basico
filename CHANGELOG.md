@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### New
 Formularios: lo básico | 24/29
 Creando la vista vote | 25/29
+Creando la vista results | 26/29
 
 ### Changes
 CHANGELOG.md file created.
