@@ -1,13 +1,15 @@
 SHELL := /bin/bash
 
+PYTHON_VERSION = 3.9
+
 # General Commands
 help:
 	cat Makefile
 
 # Automated Testing
 test: venv_run
-	pip install pytest coverage ;
-	python -m pytest ;
+	pip${PYTHON_VERSION} install pytest coverage ;
+	python${PYTHON_VERSION} -m pytest ;
 	deactivate ;
 
 # Formatting
@@ -33,15 +35,24 @@ pycodestyle:
 qa: lint types tests format_check pycodestyle
 
 # Development Commands
+venv_run:
+	. run_app.sh venv
+
 install:
 	pip install -r requirements.txt
 
-venv_run:
-	python3 -m venv venv ;
-	source venv/bin/activate ;
+fresh:
+	rm -rf venv
+	. run_app.sh venv
+	pip${PYTHON_VERSION} install --upgrade pip
+	pip${PYTHON_VERSION} install django
+	pip${PYTHON_VERSION} install prospector
+	pip${PYTHON_VERSION} install yapf
+	# pip${PYTHON_VERSION} install wheel
+	pip${PYTHON_VERSION} freeze >> requirements.txt
 
 requirements:
-	pip freeze >> requirements.txt
+	pip${PYTHON_VERSION} freeze >> requirements.txt
 
 makemigrations:
 	sh run_app.sh makemigrations

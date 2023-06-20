@@ -1,14 +1,16 @@
 #!/bin/sh
 APP_DIR="premiosplatziapp"
+PYTHON_VERSION="3.9"
 
 DJANGO_CMD="$1"
 if [ "${DJANGO_CMD}" = "" ]; then
     DJANGO_CMD="runserver"
 fi
 
-python3 -m venv venv ;
+python${PYTHON_VERSION} -m venv venv ;
 source venv/bin/activate ;
-# pip install -r requirements.txt ;
 
-cd "${APP_DIR}"
-python3 manage.py runserver
+if [ "${DJANGO_CMD}" != "venv" ]; then
+    cd "${APP_DIR}"
+    python${PYTHON_VERSION} manage.py runserver
+fi
